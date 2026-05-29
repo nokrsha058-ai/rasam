@@ -1,0 +1,6 @@
+{
+  "name": "مكتب الرسام",
+  "description": "تطبيق متكامل وسريع لإدارة ديون العملاء والمقبوضات والحسابات لـ مكتب الرسام",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
