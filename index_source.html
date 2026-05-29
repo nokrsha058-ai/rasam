@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Apple Touch Icon for iPhone Home Screen shortcut -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" href="/apple-touch-icon.png" />
+    
+    <!-- iOS Mobile Web App Web-Capable settings -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="دفتر الرسام" />
+    
+    <title>دفتر حسابات مكتب الرسام</title>
+
+    <!-- Fail-safe Error Boundary and Logger for double-click running (file:// protocol) -->
+    <script>
+      (function() {
+        window.addEventListener('error', function(e) {
+          showErrorOverlay(e.message, e.filename, e.lineno, e.colno, e.error);
+        });
+        window.addEventListener('unhandledrejection', function(e) {
+          var reason = e.reason || 'Unhandled rejection';
+          var msg = reason.message || reason;
+          var stack = reason.stack || '';
+          showErrorOverlay(msg, '', 0, 0, reason);
+        });
+
+        function showErrorOverlay(message, file, line, col, error) {
+          var errorDiv = document.getElementById('global-error-overlay');
+          if (errorDiv) return;
+
+          errorDiv = document.createElement('div');
+          errorDiv.id = 'global-error-overlay';
+          errorDiv.style.position = 'fixed';
+          errorDiv.style.inset = '0';
+          errorDiv.style.backgroundColor = '#0e1322';
+          errorDiv.style.color = '#fff';
+          errorDiv.style.zIndex = '999999';
+          errorDiv.style.display = 'flex';
+          errorDiv.style.flexDirection = 'column';
+          errorDiv.style.alignItems = 'center';
+          errorDiv.style.justifyContent = 'center';
+          errorDiv.style.padding = '20px';
+          errorDiv.style.fontFamily = 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif';
+          errorDiv.style.direction = 'rtl';
+          errorDiv.style.textAlign = 'center';
+          
+          var card = document.createElement('div');
+          card.style.background = '#1e293b';
+          card.style.border = '1px solid rgba(255,255,255,0.1)';
+          card.style.borderRadius = '28px';
+          card.style.padding = '35px 25px';
+          card.style.maxWidth = '520px';
+          card.style.width = '100%';
+          card.style.boxShadow = '0 25px 50px -12px rgba(0,0,0,0.5)';
+          
+          var title = document.createElement('h2');
+          title.innerText = '⚠️ خطأ في تشغيل النظام المحاسبي';
+          title.style.margin = '0 0 12px 0';
+          title.style.fontSize = '20px';
+          title.style.fontWeight = 'bold';
+          title.style.color = '#F43F5E';
+          card.appendChild(title);
+          
+          var desc = document.createElement('p');
+          desc.innerText = 'قد يعود السبب لقيود أمان المتصفح عند تشغيل الملف مباشرة (CORS / file://) أو مشكلة تخزين مؤقت. يرجى محاولة فتح الملف في متصفح جوجل كروم (Google Chrome) أو مايكروسوفت إيدج.';
+          desc.style.fontSize = '12px';
+          desc.style.color = '#94a3b8';
+          desc.style.lineHeight = '1.7';
+          desc.style.margin = '0 0 15px 0';
+          card.appendChild(desc);
+          
+          var details = document.createElement('div');
+          details.style.background = '#090d16';
+          details.style.border = '1px solid rgba(255,255,255,0.05)';
+          details.style.borderRadius = '16px';
+          details.style.padding = '15px';
+          details.style.margin = '15px 0';
+          details.style.textAlign = 'left';
+          details.style.fontFamily = 'monospace';
+          details.style.fontSize = '11px';
+          details.style.color = '#fda4af';
+          details.style.overflowX = 'auto';
+          details.style.whiteSpace = 'pre-wrap';
+          details.style.maxHeight = '180px';
+          
+          var errStr = 'Message: ' + message;
+          if (file) errStr += '\nFile: ' + file.split('/').pop() + ' (Line: ' + line + ')';
+          if (error && error.stack) errStr += '\n\nStack Trace:\n' + error.stack;
+          else if (error) errStr += '\n\nError Object: ' + JSON.stringify(error);
+          details.innerText = errStr;
+          card.appendChild(details);
+
+          var btn = document.createElement('button');
+          btn.innerText = 'إعادة تحميل الصفحة';
+          btn.style.background = 'linear-gradient(135deg, #FF5D02, #E11D48)';
+          btn.style.color = '#fff';
+          btn.style.border = 'none';
+          btn.style.borderRadius = '14px';
+          btn.style.padding = '12px 24px';
+          btn.style.fontSize = '12px';
+          btn.style.fontWeight = 'bold';
+          btn.style.cursor = 'pointer';
+          btn.style.boxShadow = '0 4px 12px rgba(225, 29, 72, 0.3)';
+          btn.onclick = function() { window.location.reload(); };
+          card.appendChild(btn);
+          
+          errorDiv.appendChild(card);
+          document.body.appendChild(errorDiv);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
